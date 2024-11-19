@@ -1,0 +1,75 @@
+<!-- main/templates/home.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato Clone</title>
+    <link rel="stylesheet" href="{% static 'recommend/style.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">Zomato Clone</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="{% url 'recommends:login' %}">Login</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Discover Great Places to Eat</h1>
+        <p>Find the best restaurants, cafés, and bars</p>
+        <form action="" method="GET">
+            <div class="search-bar">
+                <input type="text" name="city" placeholder="Enter city..." value="{{ request.GET.city }}">
+                <input type="text" name="restaurant" placeholder="Search for restaurants..." value="{{ request.GET.restaurant }}">
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Popular Categories -->
+    <section class="categories">
+        <h2>Popular Categories</h2>
+        <div class="category-container">
+            <div class="category">Pizza</div>
+            <div class="category">Burgers</div>
+            <div class="category">Chinese</div>
+            <div class="category">Indian</div>
+            <div class="category">Desserts</div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured">
+        <h2>Featured Restaurants</h2>
+        <div class="restaurant-container">
+            {% if restaurants %}
+                {% for restaurant in restaurants %}
+                    <div class="restaurant-card">
+                        <img src="https://via.placeholder.com/200" alt="{{ restaurant.Restaurant_Name }}">
+                        <h3>{{ restaurant.Restaurant_Name }}</h3>
+                        <p>{{ restaurant.City }}</p>
+                        <p>Rating: {{ restaurant.Aggregate_rating }}</p>
+                        <!-- <p>Votes: {{ restaurant.Votes }}</p> -->
+                        <p>Address: {{ restaurant.Address }}</p>
+                        <!-- <p>Popularity Score: {{ restaurant.Popularity_Score }}</p> -->
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No restaurants found for the specified criteria.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <script src="{% static 'recommender/static/script.js' %}"></script>
+</body>
+</html>
